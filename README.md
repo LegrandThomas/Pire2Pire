@@ -502,14 +502,14 @@ du module | 123                               |
 <details>
       <summary>MCD</summary>
 
-![image pire2pire](.\assets\img\MCD.png)
+![image pire2pire](https://github.com/LegrandThomas/Pire2Pire/blob/main/assets/img/MCD.png)
 
 </details>    
 
 <details>
       <summary>MLD</summary>
 
-![image pire2pire](.\assets\img\MLD.png)
+![image pire2pire](https://github.com/LegrandThomas/Pire2Pire/blob/main/assets/img/MLD.png)
 
 </details>    
 
