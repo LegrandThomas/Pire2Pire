@@ -1,6 +1,6 @@
 # Pire2Pire
 
-![image pire2pire](.\assets\img\pire2pire_img.webp)
+![image pire2pire](https://github.com/LegrandThomas/Pire2Pire/blob/main/assets/img/pire2pire_img.webp)
 
 ## Table des matières
 
