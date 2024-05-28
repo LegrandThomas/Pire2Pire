@@ -346,7 +346,7 @@ Tags
 |-----------------------|---------------|----------|-----------------|----------------------|---------------------------------------|
 | id_users              | UUID          | 36       | PRIMARY KEY     | Identifiant de l'utilisateur | a3b3f0a6-7c35-4b57-bf69-57c46d48f1d2 |
 | email                 | VARCHAR(255)  | 255      | NOT NULL, UNIQUE| Adresse email de l'utilisateur | example@example.com               |
-| password              | VARCHAR(255)  | 255      | NOT NULL        | Mot de passe de l'utilisateur | ********                            |
+| password              | VARCHAR(255)  | 255      | NOT NULL        | Mot de passe de l'utilisateur | $2y$10$CEAwANbAtAD20iTeu5M43.ohvYT4L7tyfDu7VgiYO4Wq5TcaiLADC                            |
 | is_active             | BOOLEAN       | -        | NOT NULL        | Statut d'activation de l'utilisateur | true                          |
 | identification_code   | VARCHAR(50)   | 50       | NOT NULL, UNIQUE| Code d'identification de l'utilisateur | ABC123                           |
 | created_at            | DATE          | -        | NOT NULL        | Date de création de l'utilisateur | 2024-05-28                        |
