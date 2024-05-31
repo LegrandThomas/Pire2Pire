@@ -490,14 +490,14 @@ du module | 123                               |
 <details>
       <summary>MCD</summary>
 
-![image pire2pire](https://github.com/LegrandThomas/Pire2Pire/blob/main/assets/img/p2pmcd.png)
+![image pire2pire](https://github.com/LegrandThomas/Pire2Pire/blob/main/assets/img/MCDp2p.png)
 
 </details>    
 
 <details>
       <summary>MLD</summary>
 
-![image pire2pire](https://github.com/LegrandThomas/Pire2Pire/blob/main/assets/img/p2pmld.png)
+![image pire2pire](https://github.com/LegrandThomas/Pire2Pire/blob/main/assets/img/MLDp2p.png)
 
 </details>    
 
@@ -511,10 +511,10 @@ Users et Roles
     1 user a 1 et 1 seul rôle : Lors de l'inscription, est attribué un rôle unique (apprenant par défaut).
     1 rôle est affecté à 0 ou plusieurs users : Un rôle peut être attribué à plusieurs utilisateurs, mais il peut aussi ne pas être attribué du tout.
 
-Users et Profiles
+Users et adresse
 
-    1 user a 0 ou 1 seul profil : Permet de créer rapidement un utilisateur en base de données sans avoir à renseigner un profil complet.
-    1 profil appartient à 1 et 1 seul user : Chaque profil est associé à un seul utilisateur.
+    1 user a 1 et 1 seule adress 
+    1 adresse appartient a 1 ou plusieur users
 
 Users et Administrateurs
 
@@ -607,25 +607,26 @@ Tags
 
 <details>
       <summary>MPD textuel</summary>
-roles = (id_roles INT AUTO_INCREMENT, name VARCHAR(50) , role_code_prefix VARCHAR(1) , created_at DATE, updated_at DATE);
+roles = (id_roles INT AUTO_INCREMENT, name VARCHAR(50) , role_code_prefix VARCHAR(1) , created_at DATETIME NOT NULL DEFAULT CURRENT_DATE, updated_at DATETIME NOT NULL DEFAULT CURRENT_DATE);
 
-statuses = (id_statuses INT AUTO_INCREMENT, name VARCHAR(50) , created_at DATE, updated_at DATE);
+statuses = (id_statuses INT AUTO_INCREMENT, name VARCHAR(50) , created_at DATETIME NOT NULL DEFAULT CURRENT_DATE, updated_at DATETIME NOT NULL DEFAULT CURRENT_DATE);
 
-tags = (id_tags INT AUTO_INCREMENT, name VARCHAR(100) , created_at DATE, updated_at DATE);
+tags = (id_tags INT AUTO_INCREMENT, name VARCHAR(100) , created_at DATETIME NOT NULL DEFAULT CURRENT_DATE, updated_at DATETIME NOT NULL DEFAULT CURRENT_DATE);
 
-users = (id_users UUID, first_name VARCHAR(255) , last_name VARCHAR(255) , email VARCHAR(255) , password VARCHAR(255) , pseudo VARCHAR(255) , birthdate DATE, is_active BOOLEAN, identification_code VARCHAR(50) , created_at DATE, updated_at DATE, #id_users_1*, #id_roles);
+adress = (id_profiles INT AUTO_INCREMENT, house_number_or_building INT, street VARCHAR(100) , city VARCHAR(50) , zip_code VARCHAR(50) , adress_line2 VARCHAR(50) , country VARCHAR(50) , created_at DATETIME NOT NULL DEFAULT CURRENT_DATE, updated_at DATETIME NOT NULL DEFAULT CURRENT_DATE);
 
-formations = (id_formations INT AUTO_INCREMENT, name VARCHAR(100) , description VARCHAR(255) , created_at DATE, updated_at DATE, #id_users, #id_users_1, #id_statuses);
+users = (id_users UUID, first_name VARCHAR(255) , last_name VARCHAR(255) , email VARCHAR(255) , password VARCHAR(255) , pseudo VARCHAR(255) , birthdate DATE, is_active BOOLEAN, identification_code VARCHAR(50) , created_at DATETIME NOT NULL DEFAULT CURRENT_DATE, updated_at DATETIME NOT NULL DEFAULT CURRENT_DATE, #id_users_1*, #id_roles, #id_profiles);
 
-modules = (id_modules INT AUTO_INCREMENT, name VARCHAR(100) , description VARCHAR(50) , objectif VARCHAR(50) , duration TIME, version VARCHAR(10) , created_at DATE, updated_at DATE, #id_users, #id_users_1, #id_statuses);
+formations = (id_formations INT AUTO_INCREMENT, name VARCHAR(100) , description VARCHAR(255) , created_at DATETIME NOT NULL DEFAULT CURRENT_DATE, updated_at DATETIME NOT NULL DEFAULT CURRENT_DATE, #id_users, #id_users_1, #id_statuses);
 
-lessons = (id_lessons INT AUTO_INCREMENT, name VARCHAR(100) , description VARCHAR(255) , created_at DATE, updated_at DATE, #id_users, #id_statuses, #id_modules*);
+modules = (id_modules INT AUTO_INCREMENT, name VARCHAR(100) , description VARCHAR(50) , objectif VARCHAR(50) , duration TIME, version VARCHAR(10) , created_at DATETIME NOT NULL DEFAULT CURRENT_DATE, updated_at DATETIME NOT NULL DEFAULT CURRENT_DATE, #id_users, #id_users_1, #id_statuses);
 
-contents = (id_contents INT AUTO_INCREMENT, name_text VARCHAR(50) , text VARCHAR(255) , name_img VARCHAR(50) , img_url VARCHAR(50) , name_video VARCHAR(50) , video_url VARCHAR(50) , created_at DATE, updated_at DATE, #id_users, #id_users_1, #id_lessons*);
+lessons = (id_lessons INT AUTO_INCREMENT, name VARCHAR(100) , description VARCHAR(255) , created_at DATETIME NOT NULL DEFAULT CURRENT_DATE, updated_at DATETIME NOT NULL DEFAULT CURRENT_DATE, #id_users, #id_statuses, #id_modules*);
 
-adress = (id_profiles INT AUTO_INCREMENT, house_number_or_building INT, street VARCHAR(100) , city VARCHAR(50) , zip_code VARCHAR(50) , adress_line2 VARCHAR(50) , country VARCHAR(50) , created_at DATE, updated_at DATE, #id_users);
+contents = (id_contents INT AUTO_INCREMENT, name_text VARCHAR(50) , text VARCHAR(255) , name_img VARCHAR(50) , img_url VARCHAR(50) , name_video VARCHAR(50) , video_url VARCHAR(50) , created_at DATETIME NOT NULL DEFAULT CURRENT_DATE, updated_at DATETIME NOT NULL DEFAULT CURRENT_DATE, #id_users, #id_users_1, #id_lessons*);
 
 compose = (#id_formations, #id_modules);
+
 follow = (#id_users, #id_formations, start_date DATE, end_date DATE, is_finished BOOLEAN);
 
 to_tag = (#id_modules, #id_tags);
@@ -635,6 +636,7 @@ validate = (#id_users, #id_modules, validate_date DATE);
 study = (#id_users, #id_lessons, validation_date DATE);
 
 revise = (#id_users, #id_lessons);
+
 
 
 
@@ -649,37 +651,52 @@ revise = (#id_users, #id_lessons);
 UNIQUE DEFAULT uuid_generate_v4(),
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+
+
 CREATE TABLE roles(
-   id_roles INT AUTO_INCREMENT  NOT NULL ,
+   id_roles INT AUTO_INCREMENT,
    name VARCHAR(50)  NOT NULL,
    role_code_prefix VARCHAR(1)  NOT NULL,
-   created_at NOT NULL DEFAULT CURRENT_DATE,
-   updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   created_at DATETIME NOT NULL DEFAULT CURRENT_DATE,
+   updated_at DATETIME NOT NULL DEFAULT CURRENT_DATE,
    PRIMARY KEY(id_roles),
    UNIQUE(name),
    UNIQUE(role_code_prefix)
 );
 
 CREATE TABLE statuses(
-   id_statuses INT AUTO_INCREMENT  NOT NULL ,
+   id_statuses INT AUTO_INCREMENT,
    name VARCHAR(50)  NOT NULL,
-   created_at DATE NOT NULL DEFAULT CURRENT_DATE,
-   updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   created_at DATETIME NOT NULL DEFAULT CURRENT_DATE,
+   updated_at DATETIME NOT NULL DEFAULT CURRENT_DATE,
    PRIMARY KEY(id_statuses),
    UNIQUE(name)
 );
 
 CREATE TABLE tags(
-   id_tags INT AUTO_INCREMENT  NOT NULL ,
+   id_tags INT AUTO_INCREMENT,
    name VARCHAR(100)  NOT NULL,
-   created_at DATE NOT NULL DEFAULT CURRENT_DATE,
-   updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   created_at DATETIME NOT NULL DEFAULT CURRENT_DATE,
+   updated_at DATETIME NOT NULL DEFAULT CURRENT_DATE,
    PRIMARY KEY(id_tags),
    UNIQUE(name)
 );
 
+CREATE TABLE adress(
+   id_profiles INT AUTO_INCREMENT,
+   house_number_or_building INT NOT NULL,
+   street VARCHAR(100)  NOT NULL,
+   city VARCHAR(50)  NOT NULL,
+   zip_code VARCHAR(50)  NOT NULL,
+   adress_line2 VARCHAR(50) ,
+   country VARCHAR(50)  NOT NULL,
+   created_at DATETIME NOT NULL DEFAULT CURRENT_DATE,
+   updated_at DATETIME NOT NULL DEFAULT CURRENT_DATE,
+   PRIMARY KEY(id_profiles)
+);
+
 CREATE TABLE users(
-   id_users UUID  NOT NULL ,
+   id_users UUID,
    first_name VARCHAR(255)  NOT NULL,
    last_name VARCHAR(255)  NOT NULL,
    email VARCHAR(255)  NOT NULL,
@@ -688,24 +705,26 @@ CREATE TABLE users(
    birthdate DATE NOT NULL,
    is_active BOOLEAN NOT NULL,
    identification_code VARCHAR(50)  NOT NULL,
-   created_at DATE NOT NULL DEFAULT CURRENT_DATE,
-   updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   created_at DATETIME NOT NULL DEFAULT CURRENT_DATE,
+   updated_at DATETIME NOT NULL DEFAULT CURRENT_DATE,
    id_users_1 UUID,
    id_roles INT NOT NULL,
+   id_profiles INT NOT NULL,
    PRIMARY KEY(id_users),
    UNIQUE(email),
    UNIQUE(pseudo),
    UNIQUE(identification_code),
    FOREIGN KEY(id_users_1) REFERENCES users(id_users),
-   FOREIGN KEY(id_roles) REFERENCES roles(id_roles)
+   FOREIGN KEY(id_roles) REFERENCES roles(id_roles),
+   FOREIGN KEY(id_profiles) REFERENCES adress(id_profiles)
 );
 
 CREATE TABLE formations(
-   id_formations INT AUTO_INCREMENT  NOT NULL ,
+   id_formations INT AUTO_INCREMENT,
    name VARCHAR(100)  NOT NULL,
    description VARCHAR(255) ,
-   created_at DATE NOT NULL DEFAULT CURRENT_DATE,
-   updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   created_at DATETIME NOT NULL DEFAULT CURRENT_DATE,
+   updated_at DATETIME NOT NULL DEFAULT CURRENT_DATE,
    id_users UUID NOT NULL,
    id_users_1 UUID NOT NULL,
    id_statuses INT NOT NULL,
@@ -717,14 +736,14 @@ CREATE TABLE formations(
 );
 
 CREATE TABLE modules(
-   id_modules INT AUTO_INCREMENT  NOT NULL ,
+   id_modules INT AUTO_INCREMENT,
    name VARCHAR(100)  NOT NULL,
    description VARCHAR(50) ,
    objectif VARCHAR(50) ,
    duration TIME,
    version VARCHAR(10) ,
-   created_at DATE NOT NULL DEFAULT CURRENT_DATE,
-   updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   created_at DATETIME NOT NULL DEFAULT CURRENT_DATE,
+   updated_at DATETIME NOT NULL DEFAULT CURRENT_DATE,
    id_users UUID NOT NULL,
    id_users_1 UUID NOT NULL,
    id_statuses INT NOT NULL,
@@ -736,11 +755,11 @@ CREATE TABLE modules(
 );
 
 CREATE TABLE lessons(
-   id_lessons INT AUTO_INCREMENT  NOT NULL ,
+   id_lessons INT AUTO_INCREMENT,
    name VARCHAR(100)  NOT NULL,
    description VARCHAR(255) ,
-   created_at DATE NOT NULL DEFAULT CURRENT_DATE,
-   updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   created_at DATETIME NOT NULL DEFAULT CURRENT_DATE,
+   updated_at DATETIME NOT NULL DEFAULT CURRENT_DATE,
    id_users UUID NOT NULL,
    id_statuses INT NOT NULL,
    id_modules INT,
@@ -752,15 +771,15 @@ CREATE TABLE lessons(
 );
 
 CREATE TABLE contents(
-   id_contents INT AUTO_INCREMENT  NOT NULL ,
+   id_contents INT AUTO_INCREMENT,
    name_text VARCHAR(50) ,
    text VARCHAR(255) ,
    name_img VARCHAR(50) ,
    img_url VARCHAR(50) ,
    name_video VARCHAR(50) ,
    video_url VARCHAR(50) ,
-   created_at DATE NOT NULL DEFAULT CURRENT_DATE,
-   updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   created_at DATETIME NOT NULL DEFAULT CURRENT_DATE,
+   updated_at DATETIME NOT NULL DEFAULT CURRENT_DATE,
    id_users UUID NOT NULL,
    id_users_1 UUID NOT NULL,
    id_lessons INT,
@@ -774,24 +793,8 @@ CREATE TABLE contents(
    FOREIGN KEY(id_lessons) REFERENCES lessons(id_lessons)
 );
 
-CREATE TABLE adress(
-   id_profiles INT AUTO_INCREMENT  NOT NULL ,
-   house_number_or_building INT NOT NULL,
-   street VARCHAR(100)  NOT NULL,
-   city VARCHAR(50)  NOT NULL,
-   zip_code VARCHAR(50)  NOT NULL,
-   adress_line2 VARCHAR(50) ,
-   country VARCHAR(50)  NOT NULL,
-   created_at DATE NOT NULL DEFAULT CURRENT_DATE,
-   updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
-   id_users UUID NOT NULL,
-   PRIMARY KEY(id_profiles),
-   UNIQUE(id_users),
-   FOREIGN KEY(id_users) REFERENCES users(id_users)
-);
-
 CREATE TABLE compose(
-   id_formations INT ,
+   id_formations INT,
    id_modules INT,
    PRIMARY KEY(id_formations, id_modules),
    FOREIGN KEY(id_formations) REFERENCES formations(id_formations),
@@ -842,7 +845,6 @@ CREATE TABLE revise(
    FOREIGN KEY(id_users) REFERENCES users(id_users),
    FOREIGN KEY(id_lessons) REFERENCES lessons(id_lessons)
 );
-
 
 
 
