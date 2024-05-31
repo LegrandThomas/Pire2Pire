@@ -307,7 +307,7 @@ Tags
 
 | Attribut            | Type          | Longueur | Contraintes      | Description          | Exemple                                |
 |---------------------|---------------|----------|-----------------|----------------------|---------------------------------------|
-| id_roles            | SERIAL        | -        | PRIMARY KEY     | Identifiant du rôle  | 123                                   |
+| id_roles            | INT AUTO INCREMENT        | -        | PRIMARY KEY,  NOT NULL      | Identifiant du rôle  | 123                                   |
 | name                | VARCHAR(50)   | 50       | NOT NULL, UNIQUE| Nom du rôle          | Formateur                             |
 | role_code_prefix    | VARCHAR(1)    | 1        | NOT NULL, UNIQUE| Préfixe du code du rôle | F                                   |
 | created_at          | DATE          | -        | NOT NULL        | Date de création du rôle | 2024-05-28                          |
@@ -316,7 +316,7 @@ Tags
 ### Table : statuses
 | Attribut            | Type          | Longueur | Contraintes      | Description          | Exemple                                |
 |---------------------|---------------|----------|-----------------|----------------------|---------------------------------------|
-| id_statuses         | SERIAL        | -        | PRIMARY KEY     | Identifiant du statut | 456                                  |
+| id_statuses         | INT AUTO INCREMENT        | -        | PRIMARY KEY,  NOT NULL     | Identifiant du statut | 456                                  |
 | name                | VARCHAR(50)   | 50       | NOT NULL, UNIQUE| Nom du statut       | En cours                              |
 | created_at          | DATE          | -        | NOT NULL        | Date de création du statut | 2024-05-28                         |
 | updated_at          | DATE          | -        | NOT NULL        | Date de mise à jour du statut | 2024-05-28                        |
@@ -324,7 +324,7 @@ Tags
 ### Table : tags
 | Attribut            | Type          | Longueur | Contraintes      | Description          | Exemple                                |
 |---------------------|---------------|----------|-----------------|----------------------|---------------------------------------|
-| id_tags             | SERIAL        | -        | PRIMARY KEY     | Identifiant du tag   | 789                                   |
+| id_tags             | INT AUTO INCREMENT        | -        | PRIMARY KEY,  NOT NULL     | Identifiant du tag   | 789                                   |
 | name                | VARCHAR(100)  | 100      | NOT NULL, UNIQUE| Nom du tag           | Informatique                          |
 | created_at          | DATE          | -        | NOT NULL        | Date de création du tag | 2024-05-28                         |
 | updated_at          | DATE          | -        | NOT NULL        | Date de mise à jour du tag | 2024-05-28                        |
@@ -332,7 +332,7 @@ Tags
 ### Table : users
 | Attribut              | Type          | Longueur | Contraintes      | Description          | Exemple                                |
 |-----------------------|---------------|----------|-----------------|----------------------|---------------------------------------|
-| id_users              | UUID          | 36       | PRIMARY KEY     | Identifiant de l'utilisateur | a3b3f0a6-7c35-4b57-bf69-57c46d48f1d2 |
+| id_users              | UUID          | 36       | PRIMARY KEY , NOT NULL    | Identifiant de l'utilisateur | a3b3f0a6-7c35-4b57-bf69-57c46d48f1d2 |
 | email                 | VARCHAR(255)  | 255      | NOT NULL, UNIQUE| Adresse email de l'utilisateur | example@example.com               |
 | password              | VARCHAR(255)  | 255      | NOT NULL        | Mot de passe de l'utilisateur | $2y$10$CEAwANbAtAD20iTeu5M43.ohvYT4L7tyfDu7VgiYO4Wq5TcaiLADC                            |
 | is_active             | BOOLEAN       | -        | NOT NULL        | Statut d'activation de l'utilisateur | true                          |
@@ -351,7 +351,7 @@ Tags
 ### Table : formations
 | Attribut              | Type          | Longueur | Contraintes      | Description          | Exemple                                |
 |-----------------------|---------------|----------|-----------------|----------------------|---------------------------------------|
-| id_formations         | SERIAL        | -        | PRIMARY KEY     | Identifiant de la formation | 987                                 |
+| id_formations         | INT AUTO INCREMENT       | -        | PRIMARY KEY,  NOT NULL     | Identifiant de la formation | 987                                 |
 | name                  | VARCHAR(100)  | 100      | NOT NULL, UNIQUE| Nom de la formation | Formation A                           |
 | description           | VARCHAR(255)  | 255      |                 | Description de la formation | Description de la formation      |
 | created_at            | DATE          | -        | NOT NULL        | Date de création de la formation | 2024-05-28                       |
@@ -364,7 +364,7 @@ Tags
 ### Table : modules
 | Attribut              | Type          | Longueur | Contraintes      | Description          | Exemple                                |
 |-----------------------|---------------|----------|-----------------|----------------------|---------------------------------------|
-| id_modules            | SERIAL        | -        | PRIMARY KEY     | Identifiant du module | 654                                 |
+| id_modules            | INT AUTO INCREMENT       | -        | PRIMARY KEY,  NOT NULL      | Identifiant du module | 654                                 |
 | name                  | VARCHAR(100)  | 100      | NOT NULL, UNIQUE| Nom du module        | Module A                              |
 | description           | VARCHAR(50)   | 50       |                 | Description du module | Description du module                 |
 | objectif              | VARCHAR(50)   | 50       |                 | Objectif du module   | Objectif du module                    |
@@ -380,7 +380,7 @@ Tags
 ### Table : lessons
 | Attribut              | Type          | Longueur | Contraintes      | Description          | Exemple                                |
 |-----------------------|---------------|----------|-----------------|----------------------|---------------------------------------|
-| id_lessons            | SERIAL        | -        | PRIMARY KEY     | Identifiant de la leçon | 321                               |
+| id_lessons            | INT AUTO INCREMENT       | -        | PRIMARY KEY,  NOT NULL      | Identifiant de la leçon | 321                               |
 | name                  | VARCHAR(100)  | 100      | NOT NULL, UNIQUE| Nom de la leçon     | Leçon A                               |
 | description           | VARCHAR(255)  | 255      |                 | Description de la leçon | Description de la leçon             |
 | created_at            | DATE          | -        | NOT NULL        | Date de création de la leçon | 2024-05-28                      |
@@ -394,7 +394,7 @@ Tags
 ### Table : contents
 | Attribut              | Type          | Longueur | Contraintes      | Description          | Exemple                                |
 |-----------------------|---------------|----------|-----------------|----------------------|---------------------------------------|
-| id_contents           | SERIAL        | -        | PRIMARY KEY     | Identifiant du contenu | 111                               |
+| id_contents           | INT AUTO INCREMENT       | -        | PRIMARY KEY , NOT NULL     | Identifiant du contenu | 111                               |
 | name_text             | VARCHAR(50)   | 50       | UNIQUE          | Nom du texte         | Texte_A                               |
 | text                  | VARCHAR(255)  | 255      |                 | Texte                | "Contenu du texte"                    |
 | name_img              | VARCHAR(50)   | 50       | UNIQUE          | Nom de l'image       | Image_A                               |
@@ -411,7 +411,7 @@ Tags
 ### Table : adress
 | Attribut              | Type          | Longueur | Contraintes      | Description          | Exemple                                |
 |-----------------------|---------------|----------|-----------------|----------------------|---------------------------------------|
-| id_adress           | SERIAL        | -        | PRIMARY KEY     | Identifiant du profil | 999                               |
+| id_adress           | INT AUTO INCREMENT       | -        | PRIMARY KEY, NOT NULL      | Identifiant du profil | 999                               |
 | house_number_or_building | INTEGER    | -        | NOT NULL        | Numéro de maison ou de bâtiment | 123 |
 | street                | VARCHAR(100)  | 100      | NOT NULL        | Rue                  | Main Street                           |
 | city                  | VARCHAR(50)   | 50       | NOT NULL        | Ville                | Anytown                               |
@@ -427,7 +427,7 @@ Tags
 ### Table : compose
 | Attribut              | Type          | Longueur | Contraintes      | Description          | Exemple                                |
 |-----------------------|---------------|----------|-----------------|----------------------|---------------------------------------|
-| id_formations         | INTEGER       | -        | PRIMARY KEY     | Identifiant 
+| id_formations         | INTEGER       | -        | PRIMARY KEY,  NOT NULL      | Identifiant 
 de la formation | 419                               |
 | id_modules            | INTEGER       | -        | PRIMARY KEY     | Identifiant 
 du module | 123                               |
@@ -439,7 +439,7 @@ du module | 123                               |
 ### Table : follow
 | Attribut              | Type          | Longueur | Contraintes      | Description          | Exemple                                |
 |-----------------------|---------------|----------|-----------------|----------------------|---------------------------------------|
-| id_users              | UUID          | 36       | PRIMARY KEY     | Identifiant de l'utilisateur | a3b3f0a6-7c35-4b57-bf69-57c46d48f1d2 |
+| id_users              | UUID          | 36       | PRIMARY KEY ,  NOT NULL    | Identifiant de l'utilisateur | a3b3f0a6-7c35-4b57-bf69-57c46d48f1d2 |
 | id_formations         | INTEGER       | -        | PRIMARY KEY     | Identifiant de la formation suivie | 987                               |
 | start_date            | DATE          | -        |                 | Date de début de la formation | 2024-05-28                      |
 | end_date              | DATE          | -        |                 | Date de fin de la formation | 2024-06-28                        |
@@ -452,7 +452,7 @@ du module | 123                               |
 ### Table : to_tag
 | Attribut              | Type          | Longueur | Contraintes      | Description          | Exemple                                |
 |-----------------------|---------------|----------|-----------------|----------------------|---------------------------------------|
-| id_modules            | INTEGER       | -        | PRIMARY KEY     | Identifiant du module | 123                               |
+| id_modules            | INTEGER       | -        | PRIMARY KEY,  NOT NULL      | Identifiant du module | 123                               |
 | id_tags               | INTEGER       | -        | PRIMARY KEY     | Identifiant du tag   | 456                               |
 
 **Foreign Key Constraints:**
@@ -462,7 +462,7 @@ du module | 123                               |
 ### Table : validate
 | Attribut              | Type          | Longueur | Contraintes      | Description          | Exemple                                |
 |-----------------------|---------------|----------|-----------------|----------------------|---------------------------------------|
-| id_users              | UUID          | 36       | PRIMARY KEY     | Identifiant de l'utilisateur | a3b3f0a6-7c35-4b57-bf69-57c46d48f1d2 |
+| id_users              | UUID          | 36       | PRIMARY KEY,  NOT NULL     | Identifiant de l'utilisateur | a3b3f0a6-7c35-4b57-bf69-57c46d48f1d2 |
 | id_modules            | INTEGER       | -        | PRIMARY KEY     | Identifiant du module | 654                               |
 | validate_date         | DATE          | -        | NOT NULL        | Date de validation du module | 2024-05-28                        |
 
@@ -473,7 +473,7 @@ du module | 123                               |
 ### Table : study
 | Attribut              | Type          | Longueur | Contraintes      | Description          | Exemple                                |
 |-----------------------|---------------|----------|-----------------|----------------------|---------------------------------------|
-| id_users              | UUID          | 36       | PRIMARY KEY     | Identifiant de l'utilisateur | a3b3f0a6-7c35-4b57-bf69-57c46d48f1d2 |
+| id_users              | UUID          | 36       | PRIMARY KEY ,  NOT NULL    | Identifiant de l'utilisateur | a3b3f0a6-7c35-4b57-bf69-57c46d48f1d2 |
 | id_lessons            | INTEGER       | -        | PRIMARY KEY     | Identifiant de la leçon | 321                               |
 | validation_date       | DATE          | -        |                 | Date de validation de la leçon | 2024-05-28                      |
 
@@ -646,9 +646,11 @@ revise = (#id_users, #id_lessons);
 <details>
       <summary>script BDD</summary>
 
+UNIQUE DEFAULT uuid_generate_v4(),
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE roles(
-   id_roles INT AUTO_INCREMENT,
+   id_roles INT AUTO_INCREMENT  NOT NULL ,
    name VARCHAR(50)  NOT NULL,
    role_code_prefix VARCHAR(1)  NOT NULL,
    created_at NOT NULL DEFAULT CURRENT_DATE,
@@ -659,7 +661,7 @@ CREATE TABLE roles(
 );
 
 CREATE TABLE statuses(
-   id_statuses INT AUTO_INCREMENT,
+   id_statuses INT AUTO_INCREMENT  NOT NULL ,
    name VARCHAR(50)  NOT NULL,
    created_at DATE NOT NULL DEFAULT CURRENT_DATE,
    updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
@@ -668,7 +670,7 @@ CREATE TABLE statuses(
 );
 
 CREATE TABLE tags(
-   id_tags INT AUTO_INCREMENT,
+   id_tags INT AUTO_INCREMENT  NOT NULL ,
    name VARCHAR(100)  NOT NULL,
    created_at DATE NOT NULL DEFAULT CURRENT_DATE,
    updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
@@ -677,7 +679,7 @@ CREATE TABLE tags(
 );
 
 CREATE TABLE users(
-   id_users UUID,
+   id_users UUID  NOT NULL ,
    first_name VARCHAR(255)  NOT NULL,
    last_name VARCHAR(255)  NOT NULL,
    email VARCHAR(255)  NOT NULL,
@@ -699,7 +701,7 @@ CREATE TABLE users(
 );
 
 CREATE TABLE formations(
-   id_formations INT AUTO_INCREMENT,
+   id_formations INT AUTO_INCREMENT  NOT NULL ,
    name VARCHAR(100)  NOT NULL,
    description VARCHAR(255) ,
    created_at DATE NOT NULL DEFAULT CURRENT_DATE,
@@ -715,7 +717,7 @@ CREATE TABLE formations(
 );
 
 CREATE TABLE modules(
-   id_modules INT AUTO_INCREMENT,
+   id_modules INT AUTO_INCREMENT  NOT NULL ,
    name VARCHAR(100)  NOT NULL,
    description VARCHAR(50) ,
    objectif VARCHAR(50) ,
@@ -734,7 +736,7 @@ CREATE TABLE modules(
 );
 
 CREATE TABLE lessons(
-   id_lessons INT AUTO_INCREMENT,
+   id_lessons INT AUTO_INCREMENT  NOT NULL ,
    name VARCHAR(100)  NOT NULL,
    description VARCHAR(255) ,
    created_at DATE NOT NULL DEFAULT CURRENT_DATE,
@@ -750,7 +752,7 @@ CREATE TABLE lessons(
 );
 
 CREATE TABLE contents(
-   id_contents INT AUTO_INCREMENT,
+   id_contents INT AUTO_INCREMENT  NOT NULL ,
    name_text VARCHAR(50) ,
    text VARCHAR(255) ,
    name_img VARCHAR(50) ,
@@ -773,7 +775,7 @@ CREATE TABLE contents(
 );
 
 CREATE TABLE adress(
-   id_profiles INT AUTO_INCREMENT,
+   id_profiles INT AUTO_INCREMENT  NOT NULL ,
    house_number_or_building INT NOT NULL,
    street VARCHAR(100)  NOT NULL,
    city VARCHAR(50)  NOT NULL,
@@ -789,7 +791,7 @@ CREATE TABLE adress(
 );
 
 CREATE TABLE compose(
-   id_formations INT,
+   id_formations INT ,
    id_modules INT,
    PRIMARY KEY(id_formations, id_modules),
    FOREIGN KEY(id_formations) REFERENCES formations(id_formations),
