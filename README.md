@@ -21,20 +21,8 @@
  </details>
 
 <details>
-   <summary>MERISE : est une méthode d'analyse, de conception et de gestion de projet informatique. </summary>
-    Merise est une méthodologie de modélisation à usage général dans le domaine du
-développement de systèmes d’information, du génie logiciel et de la gestion de projet.
-Introduit pour la première fois au début des années 1980, il était largement utilisé en France.
-Il a été développé et perfectionné à un point tel que la plupart des grandes organisations
-gouvernementales, commerciales et industrielles françaises l'ont adopté.
-Merise procède à un traitement séparé des données et des processus, où la vue des données est
-modélisée en trois étapes: de la conception à la physique en passant par la logique. De même,
-la vue axée sur les processus passe par les trois étapes conceptuelle, organisationnelle et
-opérationnelle. Ces étapes du processus de modélisation sont parallèles aux étapes du cycle de
-vie: planification stratégique, étude préliminaire, étude détaillée, développement, mise en
-œuvre et maintenance. C'est une méthode d'analyse basée sur le modèle entité-relation. En
-utilisant Merise, vous pouvez concevoir des tables avec des relations pour créer une base de
-données relationnelle.
+   <summary>MERISE </summary>
+   « Méthode d'Étude et de Réalisation Informatique par les Sous-Ensembles pour les Systèmes d'Entreprises »
  </details>
 
  ## Contexte du projet:
@@ -95,7 +83,7 @@ Vue d'ensemble des entités
     Roles 
     Statuses 
     Tags 
-    Profiles
+    Adress
     Formations
     Modules
     Lessons
@@ -168,7 +156,7 @@ Roles
         Doit avoir un id unique un nom unique
         Le code_role_prefix doit être unique est composé d'une lettre
 
-Profiles
+Adress
 
     Règles de gestion :
         Doit avoir un id unique et un pseudo unique.
@@ -348,7 +336,11 @@ Tags
 | email                 | VARCHAR(255)  | 255      | NOT NULL, UNIQUE| Adresse email de l'utilisateur | example@example.com               |
 | password              | VARCHAR(255)  | 255      | NOT NULL        | Mot de passe de l'utilisateur | $2y$10$CEAwANbAtAD20iTeu5M43.ohvYT4L7tyfDu7VgiYO4Wq5TcaiLADC                            |
 | is_active             | BOOLEAN       | -        | NOT NULL        | Statut d'activation de l'utilisateur | true                          |
-| identification_code   | VARCHAR(50)   | 50       | NOT NULL, UNIQUE| Code d'identification de l'utilisateur | ABC123                           |
+| identification_code   | VARCHAR(50)   | 50       | NOT NULL, UNIQUE| Code d'identification de l'utilisateur | ABC123  
+| first_name            | VARCHAR(255)  | 255      | NOT NULL        | Prénom               | John                                  |
+| last_name             | VARCHAR(255)  | 255      | NOT NULL        | Nom                  | Doe                                   |
+| pseudo                | VARCHAR(255)  | 255      | NOT NULL, UNIQUE| Pseudo               | johndoe                               |
+| birthdate             | DATE          | -        | NOT NULL        | Date de naissance    | 1990-01-01                            |                         |
 | created_at            | DATE          | -        | NOT NULL        | Date de création de l'utilisateur | 2024-05-28                        |
 | updated_at            | DATE          | -        | NOT NULL        | Date de mise à jour de l'utilisateur| 2024-05-28                       |
 
@@ -416,14 +408,10 @@ Tags
 - `id_users` REFERENCES `users(id_users)`
 - `id_lessons` REFERENCES `lessons(id_lessons)`
 
-### Table : profiles
+### Table : adress
 | Attribut              | Type          | Longueur | Contraintes      | Description          | Exemple                                |
 |-----------------------|---------------|----------|-----------------|----------------------|---------------------------------------|
-| id_profiles           | SERIAL        | -        | PRIMARY KEY     | Identifiant du profil | 999                               |
-| first_name            | VARCHAR(255)  | 255      | NOT NULL        | Prénom               | John                                  |
-| last_name             | VARCHAR(255)  | 255      | NOT NULL        | Nom                  | Doe                                   |
-| pseudo                | VARCHAR(255)  | 255      | NOT NULL, UNIQUE| Pseudo               | johndoe                               |
-| birthdate             | DATE          | -        | NOT NULL        | Date de naissance    | 1990-01-01                            |
+| id_adress           | SERIAL        | -        | PRIMARY KEY     | Identifiant du profil | 999                               |
 | house_number_or_building | INTEGER    | -        | NOT NULL        | Numéro de maison ou de bâtiment | 123 |
 | street                | VARCHAR(100)  | 100      | NOT NULL        | Rue                  | Main Street                           |
 | city                  | VARCHAR(50)   | 50       | NOT NULL        | Ville                | Anytown                               |
@@ -502,14 +490,14 @@ du module | 123                               |
 <details>
       <summary>MCD</summary>
 
-![image pire2pire](https://github.com/LegrandThomas/Pire2Pire/blob/main/assets/img/MCD.png)
+![image pire2pire](https://github.com/LegrandThomas/Pire2Pire/blob/main/assets/img/p2pmcd.png)
 
 </details>    
 
 <details>
       <summary>MLD</summary>
 
-![image pire2pire](https://github.com/LegrandThomas/Pire2Pire/blob/main/assets/img/MLD.png)
+![image pire2pire](https://github.com/LegrandThomas/Pire2Pire/blob/main/assets/img/p2pmld.png)
 
 </details>    
 
@@ -619,26 +607,25 @@ Tags
 
 <details>
       <summary>MPD textuel</summary>
-roles = (id_roles SERIAL, name VARCHAR(50) , role_code_prefix VARCHAR(1) , created_at DATE, updated_at DATE);
+roles = (id_roles INT AUTO_INCREMENT, name VARCHAR(50) , role_code_prefix VARCHAR(1) , created_at DATE, updated_at DATE);
 
+statuses = (id_statuses INT AUTO_INCREMENT, name VARCHAR(50) , created_at DATE, updated_at DATE);
 
-statuses = (id_statuses SERIAL, name VARCHAR(50) , created_at DATE, updated_at DATE);
-tags = (id_tags SERIAL, name VARCHAR(100) , created_at DATE, updated_at DATE);
+tags = (id_tags INT AUTO_INCREMENT, name VARCHAR(100) , created_at DATE, updated_at DATE);
 
-users = (id_users UUID, email VARCHAR(255) , password VARCHAR(255) , is_active BOOLEAN, identification_code VARCHAR(50) , created_at DATE, updated_at DATE, #id_users_1*, #id_roles);
+users = (id_users UUID, first_name VARCHAR(255) , last_name VARCHAR(255) , email VARCHAR(255) , password VARCHAR(255) , pseudo VARCHAR(255) , birthdate DATE, is_active BOOLEAN, identification_code VARCHAR(50) , created_at DATE, updated_at DATE, #id_users_1*, #id_roles);
 
-formations = (id_formations SERIAL, name VARCHAR(100) , description VARCHAR(255) , created_at DATE, updated_at DATE, #id_users, #id_statuses);
+formations = (id_formations INT AUTO_INCREMENT, name VARCHAR(100) , description VARCHAR(255) , created_at DATE, updated_at DATE, #id_users, #id_users_1, #id_statuses);
 
-modules = (id_modules SERIAL, name VARCHAR(100) , description VARCHAR(50) , objectif VARCHAR(50) , duration TIME, version VARCHAR(10) , created_at DATE, updated_at DATE, #id_users, #id_statuses);
+modules = (id_modules INT AUTO_INCREMENT, name VARCHAR(100) , description VARCHAR(50) , objectif VARCHAR(50) , duration TIME, version VARCHAR(10) , created_at DATE, updated_at DATE, #id_users, #id_users_1, #id_statuses);
 
-lessons = (id_lessons SERIAL, name VARCHAR(100) , description VARCHAR(255) , created_at DATE, updated_at DATE, #id_users, #id_statuses, #id_modules*);
+lessons = (id_lessons INT AUTO_INCREMENT, name VARCHAR(100) , description VARCHAR(255) , created_at DATE, updated_at DATE, #id_users, #id_statuses, #id_modules*);
 
-contents = (id_contents SERIAL, name_text VARCHAR(50) , text VARCHAR(255) , name_img VARCHAR(50) , img_url VARCHAR(50) , name_video VARCHAR(50) , video_url VARCHAR(50) , created_at DATE, updated_at DATE, #id_users, #id_lessons*);
+contents = (id_contents INT AUTO_INCREMENT, name_text VARCHAR(50) , text VARCHAR(255) , name_img VARCHAR(50) , img_url VARCHAR(50) , name_video VARCHAR(50) , video_url VARCHAR(50) , created_at DATE, updated_at DATE, #id_users, #id_users_1, #id_lessons*);
 
-profiles = (id_profiles SERIAL, first_name VARCHAR(255) , last_name VARCHAR(255) , pseudo VARCHAR(255) , birthdate DATE, house_number_or_building INTEGER, street VARCHAR(100) , city VARCHAR(50) , zip_code VARCHAR(50) , adress_line2 VARCHAR(50) , country VARCHAR(50) , created_at DATE, updated_at DATE, #id_users);
+adress = (id_profiles INT AUTO_INCREMENT, house_number_or_building INT, street VARCHAR(100) , city VARCHAR(50) , zip_code VARCHAR(50) , adress_line2 VARCHAR(50) , country VARCHAR(50) , created_at DATE, updated_at DATE, #id_users);
 
 compose = (#id_formations, #id_modules);
-
 follow = (#id_users, #id_formations, start_date DATE, end_date DATE, is_finished BOOLEAN);
 
 to_tag = (#id_modules, #id_tags);
@@ -646,6 +633,9 @@ to_tag = (#id_modules, #id_tags);
 validate = (#id_users, #id_modules, validate_date DATE);
 
 study = (#id_users, #id_lessons, validation_date DATE);
+
+revise = (#id_users, #id_lessons);
+
 
 
 
@@ -655,185 +645,202 @@ study = (#id_users, #id_lessons, validation_date DATE);
 
 <details>
       <summary>script BDD</summary>
-CREATE TABLE roles (
-    id_roles SERIAL,
-    name VARCHAR(50) NOT NULL,
-    role_code_prefix VARCHAR(1) NOT NULL,
-    created_at DATE NOT NULL DEFAULT CURRENT_DATE,
-    updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
-    PRIMARY KEY (id_roles),
-    UNIQUE (name),
-    UNIQUE (role_code_prefix)
+
+
+CREATE TABLE roles(
+   id_roles INT AUTO_INCREMENT,
+   name VARCHAR(50)  NOT NULL,
+   role_code_prefix VARCHAR(1)  NOT NULL,
+   created_at NOT NULL DEFAULT CURRENT_DATE,
+   updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   PRIMARY KEY(id_roles),
+   UNIQUE(name),
+   UNIQUE(role_code_prefix)
 );
 
-CREATE TABLE statuses (
-    id_statuses SERIAL,
-    name VARCHAR(50) NOT NULL,
-    created_at DATE NOT NULL DEFAULT CURRENT_DATE,
-    updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
-    PRIMARY KEY (id_statuses),
-    UNIQUE (name)
+CREATE TABLE statuses(
+   id_statuses INT AUTO_INCREMENT,
+   name VARCHAR(50)  NOT NULL,
+   created_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   PRIMARY KEY(id_statuses),
+   UNIQUE(name)
 );
 
-CREATE TABLE tags (
-    id_tags SERIAL,
-    name VARCHAR(100) NOT NULL,
-    created_at DATE NOT NULL DEFAULT CURRENT_DATE,
-    updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
-    PRIMARY KEY (id_tags),
-    UNIQUE (name)
+CREATE TABLE tags(
+   id_tags INT AUTO_INCREMENT,
+   name VARCHAR(100)  NOT NULL,
+   created_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   PRIMARY KEY(id_tags),
+   UNIQUE(name)
 );
 
-CREATE TABLE users (
-    id_users UUID,
-    email VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    is_active BOOLEAN NOT NULL,
-    identification_code VARCHAR(50) NOT NULL,
-    created_at DATE NOT NULL DEFAULT CURRENT_DATE,
-    updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
-    id_users_1 UUID,
-    id_roles INTEGER NOT NULL,
-    PRIMARY KEY (id_users),
-    UNIQUE (email),
-    UNIQUE (identification_code),
-    FOREIGN KEY (id_users_1) REFERENCES users (id_users),
-    FOREIGN KEY (id_roles) REFERENCES roles (id_roles)
+CREATE TABLE users(
+   id_users UUID,
+   first_name VARCHAR(255)  NOT NULL,
+   last_name VARCHAR(255)  NOT NULL,
+   email VARCHAR(255)  NOT NULL,
+   password VARCHAR(255)  NOT NULL,
+   pseudo VARCHAR(255)  NOT NULL,
+   birthdate DATE NOT NULL,
+   is_active BOOLEAN NOT NULL,
+   identification_code VARCHAR(50)  NOT NULL,
+   created_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   id_users_1 UUID,
+   id_roles INT NOT NULL,
+   PRIMARY KEY(id_users),
+   UNIQUE(email),
+   UNIQUE(pseudo),
+   UNIQUE(identification_code),
+   FOREIGN KEY(id_users_1) REFERENCES users(id_users),
+   FOREIGN KEY(id_roles) REFERENCES roles(id_roles)
 );
 
-CREATE TABLE formations (
-    id_formations SERIAL,
-    name VARCHAR(100) NOT NULL,
-    description VARCHAR(255),
-    created_at DATE NOT NULL DEFAULT CURRENT_DATE,
-    updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
-    id_users UUID NOT NULL,
-    id_statuses INTEGER NOT NULL,
-    PRIMARY KEY (id_formations),
-    UNIQUE (name),
-    FOREIGN KEY (id_users) REFERENCES users (id_users),
-    FOREIGN KEY (id_statuses) REFERENCES statuses (id_statuses)
+CREATE TABLE formations(
+   id_formations INT AUTO_INCREMENT,
+   name VARCHAR(100)  NOT NULL,
+   description VARCHAR(255) ,
+   created_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   id_users UUID NOT NULL,
+   id_users_1 UUID NOT NULL,
+   id_statuses INT NOT NULL,
+   PRIMARY KEY(id_formations),
+   UNIQUE(name),
+   FOREIGN KEY(id_users) REFERENCES users(id_users),
+   FOREIGN KEY(id_users_1) REFERENCES users(id_users),
+   FOREIGN KEY(id_statuses) REFERENCES statuses(id_statuses)
 );
 
-CREATE TABLE modules (
-    id_modules SERIAL,
-    name VARCHAR(100) NOT NULL,
-    description VARCHAR(50),
-    objectif VARCHAR(50),
-    duration TIME,
-    version VARCHAR(10),
-    created_at DATE NOT NULL DEFAULT CURRENT_DATE,
-    updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
-    id_users UUID NOT NULL,
-    id_statuses INTEGER NOT NULL,
-    PRIMARY KEY (id_modules),
-    UNIQUE (name),
-    FOREIGN KEY (id_users) REFERENCES users (id_users),
-    FOREIGN KEY (id_statuses) REFERENCES statuses (id_statuses)
+CREATE TABLE modules(
+   id_modules INT AUTO_INCREMENT,
+   name VARCHAR(100)  NOT NULL,
+   description VARCHAR(50) ,
+   objectif VARCHAR(50) ,
+   duration TIME,
+   version VARCHAR(10) ,
+   created_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   id_users UUID NOT NULL,
+   id_users_1 UUID NOT NULL,
+   id_statuses INT NOT NULL,
+   PRIMARY KEY(id_modules),
+   UNIQUE(name),
+   FOREIGN KEY(id_users) REFERENCES users(id_users),
+   FOREIGN KEY(id_users_1) REFERENCES users(id_users),
+   FOREIGN KEY(id_statuses) REFERENCES statuses(id_statuses)
 );
 
-CREATE TABLE lessons (
-    id_lessons SERIAL,
-    name VARCHAR(100) NOT NULL,
-    description VARCHAR(255),
-    created_at DATE NOT NULL DEFAULT CURRENT_DATE,
-    updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
-    id_users UUID NOT NULL,
-    id_statuses INTEGER NOT NULL,
-    id_modules INTEGER,
-    PRIMARY KEY (id_lessons),
-    UNIQUE (name),
-    FOREIGN KEY (id_users) REFERENCES users (id_users),
-    FOREIGN KEY (id_statuses) REFERENCES statuses (id_statuses),
-    FOREIGN KEY (id_modules) REFERENCES modules (id_modules)
+CREATE TABLE lessons(
+   id_lessons INT AUTO_INCREMENT,
+   name VARCHAR(100)  NOT NULL,
+   description VARCHAR(255) ,
+   created_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   id_users UUID NOT NULL,
+   id_statuses INT NOT NULL,
+   id_modules INT,
+   PRIMARY KEY(id_lessons),
+   UNIQUE(name),
+   FOREIGN KEY(id_users) REFERENCES users(id_users),
+   FOREIGN KEY(id_statuses) REFERENCES statuses(id_statuses),
+   FOREIGN KEY(id_modules) REFERENCES modules(id_modules)
 );
 
-CREATE TABLE contents (
-    id_contents SERIAL,
-    name_text VARCHAR(50),
-    text VARCHAR(255),
-    name_img VARCHAR(50),
-    img_url VARCHAR(50),
-    name_video VARCHAR(50),
-    video_url VARCHAR(50),
-    created_at DATE NOT NULL DEFAULT CURRENT_DATE,
-    updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
-    id_users UUID NOT NULL,
-    id_lessons INTEGER,
-    PRIMARY KEY (id_contents),
-    UNIQUE (id_lessons),
-    UNIQUE (name_text),
-    UNIQUE (name_img),
-    UNIQUE (name_video),
-    FOREIGN KEY (id_users) REFERENCES users (id_users),
-    FOREIGN KEY (id_lessons) REFERENCES lessons (id_lessons)
+CREATE TABLE contents(
+   id_contents INT AUTO_INCREMENT,
+   name_text VARCHAR(50) ,
+   text VARCHAR(255) ,
+   name_img VARCHAR(50) ,
+   img_url VARCHAR(50) ,
+   name_video VARCHAR(50) ,
+   video_url VARCHAR(50) ,
+   created_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   id_users UUID NOT NULL,
+   id_users_1 UUID NOT NULL,
+   id_lessons INT,
+   PRIMARY KEY(id_contents),
+   UNIQUE(id_lessons),
+   UNIQUE(name_text),
+   UNIQUE(name_img),
+   UNIQUE(name_video),
+   FOREIGN KEY(id_users) REFERENCES users(id_users),
+   FOREIGN KEY(id_users_1) REFERENCES users(id_users),
+   FOREIGN KEY(id_lessons) REFERENCES lessons(id_lessons)
 );
 
-CREATE TABLE profiles (
-    id_profiles SERIAL,
-    first_name VARCHAR(255) NOT NULL,
-    last_name VARCHAR(255) NOT NULL,
-    pseudo VARCHAR(255) NOT NULL,
-    birthdate DATE NOT NULL,
-    house_number_or_building INTEGER NOT NULL,
-    street VARCHAR(100) NOT NULL,
-    city VARCHAR(50) NOT NULL,
-    zip_code VARCHAR(50) NOT NULL,
-    adress_line2 VARCHAR(50),
-    country VARCHAR(50) NOT NULL,
-    created_at DATE NOT NULL DEFAULT CURRENT_DATE,
-    updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
-    id_users UUID NOT NULL,
-    PRIMARY KEY (id_profiles),
-    UNIQUE (id_users),
-    UNIQUE (pseudo),
-    FOREIGN KEY (id_users) REFERENCES users (id_users)
+CREATE TABLE adress(
+   id_profiles INT AUTO_INCREMENT,
+   house_number_or_building INT NOT NULL,
+   street VARCHAR(100)  NOT NULL,
+   city VARCHAR(50)  NOT NULL,
+   zip_code VARCHAR(50)  NOT NULL,
+   adress_line2 VARCHAR(50) ,
+   country VARCHAR(50)  NOT NULL,
+   created_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
+   id_users UUID NOT NULL,
+   PRIMARY KEY(id_profiles),
+   UNIQUE(id_users),
+   FOREIGN KEY(id_users) REFERENCES users(id_users)
 );
 
-CREATE TABLE compose (
-    id_formations INTEGER,
-    id_modules INTEGER,
-    PRIMARY KEY (id_formations, id_modules),
-    FOREIGN KEY (id_formations) REFERENCES formations (id_formations),
-    FOREIGN KEY (id_modules) REFERENCES modules (id_modules)
+CREATE TABLE compose(
+   id_formations INT,
+   id_modules INT,
+   PRIMARY KEY(id_formations, id_modules),
+   FOREIGN KEY(id_formations) REFERENCES formations(id_formations),
+   FOREIGN KEY(id_modules) REFERENCES modules(id_modules)
 );
 
-CREATE TABLE follow (
-    id_users UUID,
-    id_formations INTEGER,
-    start_date DATE,
-    end_date DATE,
-    is_finished BOOLEAN NOT NULL,
-    PRIMARY KEY (id_users, id_formations),
-    FOREIGN KEY (id_users) REFERENCES users (id_users),
-    FOREIGN KEY (id_formations) REFERENCES formations (id_formations)
+CREATE TABLE follow(
+   id_users UUID,
+   id_formations INT,
+   start_date DATE,
+   end_date DATE,
+   is_finished BOOLEAN NOT NULL,
+   PRIMARY KEY(id_users, id_formations),
+   FOREIGN KEY(id_users) REFERENCES users(id_users),
+   FOREIGN KEY(id_formations) REFERENCES formations(id_formations)
 );
 
-CREATE TABLE to_tag (
-    id_modules INTEGER,
-    id_tags INTEGER,
-    PRIMARY KEY (id_modules, id_tags),
-    FOREIGN KEY (id_modules) REFERENCES modules (id_modules),
-    FOREIGN KEY (id_tags) REFERENCES tags (id_tags)
+CREATE TABLE to_tag(
+   id_modules INT,
+   id_tags INT,
+   PRIMARY KEY(id_modules, id_tags),
+   FOREIGN KEY(id_modules) REFERENCES modules(id_modules),
+   FOREIGN KEY(id_tags) REFERENCES tags(id_tags)
 );
 
-CREATE TABLE validate (
-    id_users UUID,
-    id_modules INTEGER,
-    validate_date DATE NOT NULL,
-    PRIMARY KEY (id_users, id_modules),
-    FOREIGN KEY (id_users) REFERENCES users (id_users),
-    FOREIGN KEY (id_modules) REFERENCES modules (id_modules)
+CREATE TABLE validate(
+   id_users UUID,
+   id_modules INT,
+   validate_date DATE NOT NULL,
+   PRIMARY KEY(id_users, id_modules),
+   FOREIGN KEY(id_users) REFERENCES users(id_users),
+   FOREIGN KEY(id_modules) REFERENCES modules(id_modules)
 );
 
-CREATE TABLE study (
-    id_users UUID,
-    id_lessons INTEGER,
-    validation_date DATE,
-    PRIMARY KEY (id_users, id_lessons),
-    FOREIGN KEY (id_users) REFERENCES users (id_users),
-    FOREIGN KEY (id_lessons) REFERENCES lessons (id_lessons)
+CREATE TABLE study(
+   id_users UUID,
+   id_lessons INT,
+   validation_date DATE,
+   PRIMARY KEY(id_users, id_lessons),
+   FOREIGN KEY(id_users) REFERENCES users(id_users),
+   FOREIGN KEY(id_lessons) REFERENCES lessons(id_lessons)
 );
+
+CREATE TABLE revise(
+   id_users UUID,
+   id_lessons INT,
+   PRIMARY KEY(id_users, id_lessons),
+   FOREIGN KEY(id_users) REFERENCES users(id_users),
+   FOREIGN KEY(id_lessons) REFERENCES lessons(id_lessons)
+);
+
 
 
 
