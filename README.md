@@ -310,24 +310,24 @@ Tags
 | id_roles            | INT AUTO INCREMENT        | -        | PRIMARY KEY,  NOT NULL      | Identifiant du rôle  | 123                                   |
 | name                | VARCHAR(50)   | 50       | NOT NULL, UNIQUE| Nom du rôle          | Formateur                             |
 | role_code_prefix    | VARCHAR(1)    | 1        | NOT NULL, UNIQUE| Préfixe du code du rôle | F                                   |
-| created_at          | DATE          | -        | NOT NULL        | Date de création du rôle | 2024-05-28                          |
-| updated_at          | DATE          | -        | NOT NULL        | Date de mise à jour du rôle | 2024-05-28                         |
+| created_at          | DATETIME          | -        | NOT NULL        | Date de création du rôle | 2024-05-28 23:59:59                        |
+| updated_at          | DATETIME          | -        | NOT NULL        | Date de mise à jour du rôle | 2024-05-28 23:59:59                         |
 
 ### Table : statuses
 | Attribut            | Type          | Longueur | Contraintes      | Description          | Exemple                                |
 |---------------------|---------------|----------|-----------------|----------------------|---------------------------------------|
 | id_statuses         | INT AUTO INCREMENT        | -        | PRIMARY KEY,  NOT NULL     | Identifiant du statut | 456                                  |
 | name                | VARCHAR(50)   | 50       | NOT NULL, UNIQUE| Nom du statut       | En cours                              |
-| created_at          | DATE          | -        | NOT NULL        | Date de création du statut | 2024-05-28                         |
-| updated_at          | DATE          | -        | NOT NULL        | Date de mise à jour du statut | 2024-05-28                        |
+| created_at          | DATETIME         | -        | NOT NULL        | Date de création du statut | 2024-05-28 23:59:59                        |
+| updated_at          | DATETIME         | -        | NOT NULL        | Date de mise à jour du statut | 2024-05-28 23:59:59                       |
 
 ### Table : tags
 | Attribut            | Type          | Longueur | Contraintes      | Description          | Exemple                                |
 |---------------------|---------------|----------|-----------------|----------------------|---------------------------------------|
 | id_tags             | INT AUTO INCREMENT        | -        | PRIMARY KEY,  NOT NULL     | Identifiant du tag   | 789                                   |
 | name                | VARCHAR(100)  | 100      | NOT NULL, UNIQUE| Nom du tag           | Informatique                          |
-| created_at          | DATE          | -        | NOT NULL        | Date de création du tag | 2024-05-28                         |
-| updated_at          | DATE          | -        | NOT NULL        | Date de mise à jour du tag | 2024-05-28                        |
+| created_at          | DATETIME          | -        | NOT NULL        | Date de création du tag | 2024-05-28 23:59:59                       |
+| updated_at          | DATETIME          | -        | NOT NULL        | Date de mise à jour du tag | 2024-05-28 23:59:59                        |
 
 ### Table : users
 | Attribut              | Type          | Longueur | Contraintes      | Description          | Exemple                                |
@@ -340,9 +340,9 @@ Tags
 | first_name            | VARCHAR(255)  | 255      | NOT NULL        | Prénom               | John                                  |
 | last_name             | VARCHAR(255)  | 255      | NOT NULL        | Nom                  | Doe                                   |
 | pseudo                | VARCHAR(255)  | 255      | NOT NULL, UNIQUE| Pseudo               | johndoe                               |
-| birthdate             | DATE          | -        | NOT NULL        | Date de naissance    | 1990-01-01                            |                         |
-| created_at            | DATE          | -        | NOT NULL        | Date de création de l'utilisateur | 2024-05-28                        |
-| updated_at            | DATE          | -        | NOT NULL        | Date de mise à jour de l'utilisateur| 2024-05-28                       |
+| birthdate             | DATE         | -        | NOT NULL        | Date de naissance    | 1990-01-01                            |                         |
+| created_at            | DATETIME         | -        | NOT NULL        | Date de création de l'utilisateur | 2024-05-28 23:59:59                       |
+| updated_at            | DATETIME          | -        | NOT NULL        | Date de mise à jour de l'utilisateur| 2024-05-28 23:59:59                       |
 
 **Foreign Key Constraints:**
 - `id_users_1` REFERENCES `users(id_users)`
@@ -354,8 +354,8 @@ Tags
 | id_formations         | INT AUTO INCREMENT       | -        | PRIMARY KEY,  NOT NULL     | Identifiant de la formation | 987                                 |
 | name                  | VARCHAR(100)  | 100      | NOT NULL, UNIQUE| Nom de la formation | Formation A                           |
 | description           | VARCHAR(255)  | 255      |                 | Description de la formation | Description de la formation      |
-| created_at            | DATE          | -        | NOT NULL        | Date de création de la formation | 2024-05-28                       |
-| updated_at            | DATE          | -        | NOT NULL        | Date de mise à jour de la formation | 2024-05-28                      |
+| created_at            | DATETIME         | -        | NOT NULL        | Date de création de la formation | 2024-05-28 23:59:59                      |
+| updated_at            | DATETIME         | -        | NOT NULL        | Date de mise à jour de la formation | 2024-05-28 23:59:59                   |
 
 **Foreign Key Constraints:**
 - `id_users` REFERENCES `users(id_users)`
@@ -370,8 +370,8 @@ Tags
 | objectif              | VARCHAR(50)   | 50       |                 | Objectif du module   | Objectif du module                    |
 | duration              | TIME          | -        |                 | Durée du module      | 02:30:00                              |
 | version               | VARCHAR(10)   | 10       |                 | Version du module    | 1.0                                   |
-| created_at            | DATE          | -        | NOT NULL        | Date de création du module | 2024-05-28                       |
-| updated_at            | DATE          | -        | NOT NULL        | Date de mise à jour du module | 2024-05-28                      |
+| created_at            | DATETIME       | -        | NOT NULL        | Date de création du module | 2024-05-28 23:59:59                      |
+| updated_at            | DATETIME         | -        | NOT NULL        | Date de mise à jour du module | 2024-05-28  23:59:59                    |
 
 **Foreign Key Constraints:**
 - `id_users` REFERENCES `users(id_users)`
@@ -383,8 +383,8 @@ Tags
 | id_lessons            | INT AUTO INCREMENT       | -        | PRIMARY KEY,  NOT NULL      | Identifiant de la leçon | 321                               |
 | name                  | VARCHAR(100)  | 100      | NOT NULL, UNIQUE| Nom de la leçon     | Leçon A                               |
 | description           | VARCHAR(255)  | 255      |                 | Description de la leçon | Description de la leçon             |
-| created_at            | DATE          | -        | NOT NULL        | Date de création de la leçon | 2024-05-28                      |
-| updated_at            | DATE          | -        | NOT NULL        | Date de mise à jour de la leçon | 2024-05-28                     |
+| created_at            | DATETIME       | -        | NOT NULL        | Date de création de la leçon | 2024-05-28  23:59:59                    |
+| updated_at            | DATETIME         | -        | NOT NULL        | Date de mise à jour de la leçon | 2024-05-28  23:59:59                   |
 
 **Foreign Key Constraints:**
 - `id_users` REFERENCES `users(id_users)`
@@ -401,8 +401,8 @@ Tags
 | img_url               | VARCHAR(50)   | 50       |                 | URL de l'image       | "http://exemple.com/image.jpg"       |
 | name_video            | VARCHAR(50)   | 50       | UNIQUE          | Nom de la vidéo      | Video_A                               |
 | video_url             | VARCHAR(50)   | 50       |                 | URL de la vidéo      | "http://exemple.com/video.mp4"       |
-| created_at            | DATE          | -        | NOT NULL        | Date de création du contenu | 2024-05-28                       |
-| updated_at            | DATE          | -        | NOT NULL        | Date de mise à jour du contenu | 2024-05-28                      |
+| created_at            | DATETIME         | -        | NOT NULL        | Date de création du contenu | 2024-05-28 23:59:59                     |
+| updated_at            | DATETIME        | -        | NOT NULL        | Date de mise à jour du contenu | 2024-05-28 23:59:59                     |
 
 **Foreign Key Constraints:**
 - `id_users` REFERENCES `users(id_users)`
@@ -418,8 +418,8 @@ Tags
 | zip_code              | VARCHAR(50)   | 50       | NOT NULL        | Code postal          | 12345                                 |
 | adress_line2          | VARCHAR(50)   | 50       |                 | Ligne d'adresse 2    | (facultatif)                          |
 | country               | VARCHAR(50)   | 50       | NOT NULL        | Pays                 | Country X                             |
-| created_at            | DATE          | -        | NOT NULL        | Date de création du profil | 2024-05-28                       |
-| updated_at            | DATE          | -        | NOT NULL        | Date de mise à jour du profil | 2024-05-28                      |
+| created_at            | DATETIME         | -        | NOT NULL        | Date de création du profil | 2024-05-28 23:59:59                     |
+| updated_at            | DATETIME         | -        | NOT NULL        | Date de mise à jour du profil | 2024-05-28 23:59:59                    |
 
 **Foreign Key Constraints:**
 - `id_users` REFERENCES `users(id_users)`
